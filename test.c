@@ -13,7 +13,7 @@ void printbin(int8 *input, const int16 size)
 
   for (i = size, p = input; i; i--, p++)
   {
-    if (!((i + 1) % 2))
+    if (!(i % 2))
       printf(" ");
     printf("%.02x", *p);
   }
@@ -24,9 +24,13 @@ void printbin(int8 *input, const int16 size)
 
 int main()
 {
-  Arcfour *rc4;
+  // Arcfour *rc4;
   int16 skey, stext;
   char *key, *text, *encrypted, *decrypted;
+
+  key = text = encrypted = decrypted = 0;
+  skey = stext = 0;
+  text = key;
 
   key = "tomatoes";
   skey = strlen(key);
@@ -44,7 +48,7 @@ int main()
 
   printf("'%s'\n ->", text);
   // encrypted = rc4encrypt(text, stext);
-  printbin(key, skey);
+  printbin((int8 *)key, skey);
 
   return 0;
 }
