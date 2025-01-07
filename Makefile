@@ -1,7 +1,7 @@
 all: arcfour test
 
-test: test.o
-	gcc test.o -o test -O2 -Wall
+test: test.o arcfour.so
+	gcc arcfour.o test.o -o test -O2 -Wall
 
 test.o: test.c
 	gcc -c -O2 -Wall test.c 
@@ -13,4 +13,4 @@ arcfour.o: arcfour.c
 	gcc -c -O2 -Wall arcfour.c
 
 clean: 
-	rm -f *.o *.so example
+	rm -f *.o *.so test

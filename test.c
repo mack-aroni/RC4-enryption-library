@@ -24,13 +24,10 @@ void printbin(int8 *input, const int16 size)
 
 int main()
 {
-  // Arcfour *rc4;
+  Arcfour *rc4;
   int16 skey, stext;
-  char *key, *text, *encrypted, *decrypted;
-
-  key = text = encrypted = decrypted = 0;
-  skey = stext = 0;
-  text = key;
+  char *key, *text;
+  int8 *encrypted, *decrypted;
 
   key = "tomatoes";
   skey = strlen(key);
@@ -39,16 +36,23 @@ int main()
 
   printf("Initializing encryption...");
   F;
-  // rc4 = rc4init(key, skey);
-  // if (rc4 == 0)
-  // {
-  //   /* error */
-  // }
+  rc4 = rc4init((int8 *)key, skey);
   printf("done\n");
 
   printf("'%s'\n ->", text);
-  // encrypted = rc4encrypt(text, stext);
-  printbin((int8 *)key, skey);
+  encrypted = rc4encrypt(rc4, (int8 *)text, stext);
+  printbin(encrypted, stext);
+  rc4uninit(rc4);
+
+  printf("Initializing encryption...");
+  F;
+  rc4 = rc4init((int8 *)key, skey);
+  printf("done\n");
+
+  decrypted = rc4decrypt(rc4, encrypted, stext);
+  printf(" -> '%s'\n", decrypted);
+
+  rc4uninit(rc4);
 
   return 0;
 }
